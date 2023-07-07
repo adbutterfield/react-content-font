@@ -1,0 +1,10 @@
+.DS_Store
+.coveralls.yml
+.eslintcache
+.npm
+*.log
+*.tgz
+coverage
+dist
+node_modules
+npm-debug.log*
