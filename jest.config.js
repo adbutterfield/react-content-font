@@ -14,6 +14,6 @@ module.exports = {
   collectCoverage: true,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  collectCoverageFrom: ['src/*.ts'],
-  coveragePathIgnorePatterns: ['/node_modules/', 'src/types.d.ts'],
+  collectCoverageFrom: ['src/*.ts', 'src/*.tsx'],
+  coveragePathIgnorePatterns: ['/node_modules/', 'src/types.d.ts', 'src/index.ts'],
 };
