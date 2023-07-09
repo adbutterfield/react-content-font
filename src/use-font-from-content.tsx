@@ -48,7 +48,7 @@ export default function useFontFromContent(fontName: string, onLoad?: () => void
     }
   }, []);
 
-  useMutationObserver(document.body, mutationCallback);
+  useMutationObserver(mutationCallback);
 
   useEffect(() => {
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, filter);

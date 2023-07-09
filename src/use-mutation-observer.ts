@@ -4,7 +4,7 @@ const DEFAULT_OPTIONS = {
   config: { childList: true, subtree: true, characterData: true },
 };
 
-export default function useMutationObserver(targetEl: HTMLElement, cb: (mutations: MutationRecord[]) => void, options = DEFAULT_OPTIONS) {
+export default function useMutationObserver(cb: (mutations: MutationRecord[]) => void, options = DEFAULT_OPTIONS) {
   const [observer, setObserver] = useState<MutationObserver | null>(null);
 
   useEffect(() => {
@@ -15,11 +15,11 @@ export default function useMutationObserver(targetEl: HTMLElement, cb: (mutation
   useEffect(() => {
     if (!observer) return;
     const { config } = options;
-    observer.observe(targetEl, config);
+    observer.observe(document.body, config);
     return () => {
       if (observer) {
         observer.disconnect();
       }
     };
-  }, [observer, targetEl, options]);
+  }, [observer, options]);
 }
