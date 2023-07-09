@@ -4,7 +4,7 @@
     "declaration": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "module": "es2015",
+    "module": "esnext",
     "moduleResolution": "node",
     "noEmit": true,
     "noEmitOnError": true,
@@ -16,8 +16,9 @@
     "sourceMap": true,
     "strict": true,
     "target": "es2017",
-    "typeRoots": ["src/types.d.ts", "./node_modules/@types"]
+    "typeRoots": ["src/types.d.ts", "./node_modules/@types"],
+    "resolveJsonModule": true
   },
-  "include": ["src", "src/types.d.ts"],
+  "include": ["src", "src/types.d.ts", "rollup.config.ts", "rollup.min.config.ts"],
   "exclude": ["node_modules", "src/*.test.*"]
 }

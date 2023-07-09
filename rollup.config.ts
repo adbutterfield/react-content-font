@@ -1,5 +1,5 @@
-import typescript from 'rollup-plugin-typescript2';
-import pkg from './package.json';
+import typescript from '@rollup/plugin-typescript';
+import pkg from './package.json' assert { type: 'json' };
 
 export function getConfig({
   tsconfig = './tsconfig.json',
@@ -14,7 +14,7 @@ export function getConfig({
       format: 'esm',
     },
     {
-      name: 'EZReactFormValidator',
+      name: 'use-font-from-content',
       file: `dist/${pkg.name}.umd.js`,
       format: 'umd',
       globals: {
@@ -30,7 +30,6 @@ export function getConfig({
     plugins: [
       typescript({
         tsconfig,
-        clean: true,
       }),
       ...plugins,
     ],

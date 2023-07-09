@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "dist/use-font-from-content.js",
   "module": "dist/use-font-from-content.es.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "files": [
     "dist",
     "LICENSE"
@@ -23,8 +23,8 @@
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run build:modern && npm run build:min && npm run copyfiles",
-    "build:modern": "rollup -c",
-    "build:min": "rollup -c rollup.min.config.js",
+    "build:modern": "rollup  --config rollup.config.ts --configPlugin @rollup/plugin-typescript",
+    "build:min": "rollup --config rollup.min.config.ts --configPlugin @rollup/plugin-typescript",
     "bundlesize": "yarn build:min && bundlesize",
     "clean": "rm -rf dist",
     "copyfiles": "copyfiles -f src/types.d.ts dist",
