@@ -39,6 +39,14 @@ function TestComponent() {
   );
 }
 
+function TestComponentWithFontStyle() {
+  return (
+    <FontContext fontName="Noto Serif JP" fontStyle="ital">
+      <TestComponentContent />
+    </FontContext>
+  );
+}
+
 describe('<FontContext />', () => {
   test('should initialize with preconnect link tag', () => {
     const { container } = render(<TestComponent />);
@@ -106,6 +114,15 @@ describe('<FontContext />', () => {
     expect(fontLinkTags.length).toEqual(1);
     await user.click(screen.getByText('show double text'));
     expect(fontLinkTags.length).toEqual(1);
+  });
+
+  test('should add font style to link tags', () => {
+    const { container } = render(<TestComponentWithFontStyle />);
+
+    const fontLinkTags = container.querySelectorAll('link[rel="stylesheet"]');
+    expect(fontLinkTags[0].getAttribute('href')).not.toBeNull();
+    // @ts-ignore checking for null above
+    expect(fontLinkTags[0].getAttribute('href').includes(':ital&')).toBe(true);
   });
 });
 

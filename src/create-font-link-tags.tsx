@@ -5,6 +5,7 @@ type CreateFontLinkTagsProps = {
   newChars: string[];
   onLoad?: () => void;
   display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  fontStyle?: 'ital';
 };
 
 export default function createFontLinkTags({
@@ -12,6 +13,7 @@ export default function createFontLinkTags({
   newChars,
   onLoad,
   display,
+  fontStyle,
 }: CreateFontLinkTagsProps): React.ReactElement<HTMLLinkElement>[] {
   const batches = [];
   const batchSize = 200;
@@ -30,12 +32,13 @@ export default function createFontLinkTags({
     batches.push(currentBatch);
   }
 
+  // css2?family=Roboto:ital,wght@0,100;0,300;0,700;1,100;1,400;1,500;1,700;1,900
+
   return batches.map((batch, index) => {
     const encodedText = encodeURIComponent(Array.from(batch).join(''));
-    const url = `https://fonts.googleapis.com/css2?family=${fontName.replace(
-      /\s/g,
-      '+',
-    )}&text=${encodedText}&display=${display}`;
+    const url = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s/g, '+')}${
+      fontStyle ? `:${fontStyle}` : ''
+    }&text=${encodedText}&display=${display}`;
 
     if (onLoad && index === batches.length - 1) {
       return <link rel="stylesheet" href={url} key={encodedText.slice(0, 10)} onLoad={onLoad} />;

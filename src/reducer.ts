@@ -6,6 +6,7 @@ export type State = {
   requestedChars: Set<string>;
   onLoad?: () => void;
   display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  fontStyle?: 'ital';
 };
 
 export type Action =
@@ -20,6 +21,7 @@ export default function reducer(state: State, action: Action): State {
         newChars: [...action.uniqueChars],
         onLoad: state.onLoad,
         display: state.display,
+        fontStyle: state.fontStyle,
       });
       return {
         ...state,
@@ -35,6 +37,7 @@ export default function reducer(state: State, action: Action): State {
           newChars,
           onLoad: state.onLoad,
           display: state.display,
+          fontStyle: state.fontStyle,
         });
         return {
           ...state,

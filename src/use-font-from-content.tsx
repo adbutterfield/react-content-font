@@ -21,12 +21,14 @@ type UseFontFromContentProps = {
   fontName: string;
   onLoad?: () => void;
   display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  fontStyle?: 'ital';
 };
 
 export default function useFontFromContent({
   fontName,
   onLoad,
   display = 'swap',
+  fontStyle,
 }: UseFontFromContentProps): {
   state: {
     linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
@@ -47,6 +49,7 @@ export default function useFontFromContent({
     requestedChars: new Set<string>(),
     onLoad,
     display,
+    fontStyle,
   });
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {
