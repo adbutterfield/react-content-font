@@ -1,25 +1,25 @@
 {
-  "name": "use-font-from-content",
+  "name": "react-content-font",
   "version": "1.0.0",
   "description": "React hook to scan your web page, and generate Google font for only used characters. Especially useful for Japanese and other fonts that contain a lot of characters.",
   "author": "<adam.butterfield@ymail.com>",
   "license": "MIT",
-  "main": "dist/use-font-from-content.js",
-  "module": "dist/use-font-from-content.es.js",
+  "main": "dist/react-content-font.js",
+  "module": "dist/react-content-font.es.js",
   "types": "dist/src/index.d.ts",
   "files": [
     "dist",
     "LICENSE"
   ],
-  "homepage": "https://github.com/adbutterfield/use-font-from-content",
+  "homepage": "https://github.com/adbutterfield/react-content-font",
   "repository": {
     "type": "git",
-    "url": "https://github.com/adbutterfield/use-font-from-content"
+    "url": "https://github.com/adbutterfield/react-content-font"
   },
   "bugs": {
-    "url": "https://github.com/adbutterfield/use-font-from-content/issues"
+    "url": "https://github.com/adbutterfield/react-content-font/issues"
   },
-  "unpkg": "dist/use-font-from-content.umd.js",
+  "unpkg": "dist/react-content-font.umd.js",
   "scripts": {
     "prebuild": "npm run clean",
     "build": "npm run build:modern && npm run build:min && npm run copyfiles",
@@ -87,7 +87,7 @@
   },
   "bundlesize": [
     {
-      "path": "./dist/use-font-from-content.min.es.js",
+      "path": "./dist/react-content-font.min.es.js",
       "maxSize": "5 kB"
     }
   ]

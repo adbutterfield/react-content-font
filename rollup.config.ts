@@ -14,7 +14,7 @@ export function getConfig({
       format: 'esm',
     },
     {
-      name: 'use-font-from-content',
+      name: 'react-content-font',
       file: `dist/${pkg.name}.umd.js`,
       format: 'umd',
       globals: {
