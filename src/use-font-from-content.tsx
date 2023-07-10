@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useCallback } from 'react';
 import getUniqueCharsInPage from './get-unique-chars-in-page';
 import reducer from './reducer';
+import type { Action } from './reducer';
 import useMutationObserver from './use-mutation-observer';
 
 const filter = {
@@ -13,7 +14,15 @@ const filter = {
   },
 };
 
-export default function useFontFromContent(fontName: string, onLoad?: () => void) {
+export default function useFontFromContent(
+  fontName: string,
+  onLoad?: () => void,
+): {
+  state: {
+    linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<any>>[];
+  };
+  dispatch: React.Dispatch<Action>;
+} {
   const [state, dispatch] = useReducer(reducer, {
     fontName,
     linkTags: [<link rel="preconnect" href="https://fonts.gstatic.com/" key="preconnect" />],
@@ -59,5 +68,5 @@ export default function useFontFromContent(fontName: string, onLoad?: () => void
     });
   }, []);
 
-  return state.linkTags;
+  return { state: { linkTags: state.linkTags }, dispatch };
 }

@@ -1,20 +1,17 @@
 import '@testing-library/jest-dom';
 import React, { useState } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import useFontFromContent from './use-font-from-content';
+import FontContext, { useFontContext } from './context';
 
-function TestComponent() {
+function TestComponentContent() {
+  const { isFontLoaded } = useFontContext();
   const [showExtraElementNode, setShowExtraElementNode] = useState(false);
   const [showExtraTextNode, setShowExtraTextNode] = useState(false);
   const [showDoubleTextNode, setShowDoubleTextNode] = useState(false);
-  const {
-    state: { linkTags },
-  } = useFontFromContent('Noto Serif JP');
 
   return (
-    <>
-      {linkTags}
+    <div data-testid="content" style={{ visibility: isFontLoaded ? 'visible' : 'hidden' }}>
       <button onClick={() => setShowExtraTextNode(true)}>show extra text</button>
       <button onClick={() => setShowDoubleTextNode(true)}>show double text</button>
       <p>
@@ -28,11 +25,19 @@ function TestComponent() {
           たとえば常に陰ご意味かもに与えているますものは、心的一種といった事は文壇的朋党に申して、もし自力が大きく訳のようにやっ方ませ。一生方たり間接からは博奕も事悪いけれどもも、人々はとうとうよっしでた。相当がし、他とあり、主義人に嫌う、正直でのませんず。そうして所々で他を見るうち、人で自分とやま上、すこぶる自由です詩にするから人身でするたているうば、教授自己の鉱脈でするば、あなたで不安正しいしからおきものなて使おたて下さいんた。否域の不愉快だうちには、壇がない富去就からすこぶる会員がある訳に、私がはざっとどうのようにするられた。
         </p>
       )}
-    </>
+    </div>
   );
 }
 
-describe('useFontFromContent', () => {
+function TestComponent() {
+  return (
+    <FontContext fontName="Noto Serif JP">
+      <TestComponentContent />
+    </FontContext>
+  );
+}
+
+describe('<FontContext />', () => {
   test('should initialize with preconnect link tag', () => {
     const { container } = render(<TestComponent />);
 
@@ -92,5 +97,18 @@ describe('useFontFromContent', () => {
     expect(fontLinkTags.length).toEqual(1);
     await user.click(screen.getByText('show double text'));
     expect(fontLinkTags.length).toEqual(1);
+  });
+});
+
+describe('useFontContext', () => {
+  test('should set isFontLoaded to true after font is loaded', async () => {
+    const { container } = render(<TestComponent />);
+
+    expect(screen.getByTestId('content')).not.toBeVisible();
+    const linkElements = container.querySelectorAll('link');
+    fireEvent.load(linkElements[linkElements.length - 1]);
+    await waitFor(() => {
+      expect(screen.getByTestId('content')).toBeVisible();
+    });
   });
 });
