@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import useFontFromContent from './use-font-from-content';
 
 type FontContextState = {
@@ -20,9 +20,6 @@ export default function FontContext(props: React.PropsWithChildren<FontContextPr
   const { state } = useFontFromContent(fontName, () => setIsFontLoaded(true));
   const { Provider: FontContextProvider } = context;
 
-  useEffect(() => {
-    console.log('isFontLoaded', isFontLoaded);
-  }, [isFontLoaded]);
   // const FallbackComponent = fallback;
 
   // const loadingStyles: Partial<React.CSSProperties> = {
