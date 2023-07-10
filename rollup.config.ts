@@ -1,4 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
+import banner2 from 'rollup-plugin-banner2';
 import pkg from './package.json' assert { type: 'json' };
 
 export function getConfig({
@@ -31,6 +32,7 @@ export function getConfig({
       typescript({
         tsconfig,
       }),
+      banner2(() => `'use client';\n`),
       ...plugins,
     ],
     output,
