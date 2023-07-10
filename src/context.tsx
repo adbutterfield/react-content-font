@@ -6,6 +6,7 @@ import useFontFromContent from './use-font-from-content';
 type FontContextState =
   | {
       isFontLoaded: boolean;
+      isFontUpdating: boolean;
     }
   | undefined;
 
@@ -23,7 +24,7 @@ type FontContextProps = {
 export default function FontContext(props: React.PropsWithChildren<FontContextProps>) {
   const { fontName, display = 'swap', fontWeights, children } = props;
   const [isFontLoaded, setIsFontLoaded] = useState(false);
-  const { linkTags } = useFontFromContent({
+  const { linkTags, isFontUpdating } = useFontFromContent({
     fontName,
     display,
     fontWeights,
@@ -32,7 +33,7 @@ export default function FontContext(props: React.PropsWithChildren<FontContextPr
   const { Provider: FontContextProvider } = context;
 
   return (
-    <FontContextProvider value={{ isFontLoaded }}>
+    <FontContextProvider value={{ isFontLoaded, isFontUpdating }}>
       {linkTags}
       {children}
     </FontContextProvider>

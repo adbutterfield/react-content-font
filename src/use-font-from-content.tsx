@@ -31,6 +31,7 @@ export default function useFontFromContent({
   fontWeights,
 }: UseFontFromContentProps): {
   linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
+  isFontUpdating: boolean;
 } {
   const [state, dispatch] = useReducer(reducer, {
     fontName,
@@ -50,6 +51,7 @@ export default function useFontFromContent({
   });
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {
+    dispatch({ type: 'FONT_UPDATING' });
     const addedNodes: Node[] = [];
     const updatedNodes: Node[] = [];
 
@@ -98,5 +100,5 @@ export default function useFontFromContent({
     });
   }, []);
 
-  return { linkTags: state.linkTags };
+  return { linkTags: state.linkTags, isFontUpdating: Boolean(state.isFontUpdating) };
 }
