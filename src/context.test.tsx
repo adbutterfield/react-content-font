@@ -16,8 +16,10 @@ function TestComponentContent() {
       <button onClick={() => setShowDoubleTextNode(true)}>show double text</button>
       <p>
         多年ではもし聞えるば合っだだろたないて、とうていちゃんと教えるてお話はそう詳しいなく事た。
-        {showDoubleTextNode && '多年ではもし聞えるば合っだだろたないて、とうていちゃんと教えるてお話はそう詳しいなく事た。'}
-        {showExtraTextNode && '多私はもし会にあれでしょようと充たすておきたのたてそれでこう驚がた見えでです。'}
+        {showDoubleTextNode &&
+          '多年ではもし聞えるば合っだだろたないて、とうていちゃんと教えるてお話はそう詳しいなく事た。'}
+        {showExtraTextNode &&
+          '多私はもし会にあれでしょようと充たすておきたのたてそれでこう驚がた見えでです。'}
       </p>
       <button onClick={() => setShowExtraElementNode(true)}>show extra element</button>
       {showExtraElementNode && (
@@ -41,7 +43,9 @@ describe('<FontContext />', () => {
   test('should initialize with preconnect link tag', () => {
     const { container } = render(<TestComponent />);
 
-    const preconnectLink = container.querySelector('link[rel="preconnect"][href="https://fonts.gstatic.com/"]');
+    const preconnectLink = container.querySelector(
+      'link[rel="preconnect"][href="https://fonts.gstatic.com/"]',
+    );
     expect(preconnectLink).toBeInTheDocument();
   });
 
@@ -121,7 +125,9 @@ describe('useFontContext', () => {
     // silence error logw for this test
     const error = jest.spyOn(console, 'error');
     error.mockImplementation(jest.fn());
-    expect(() => render(<DummyComponent />)).toThrowError('useFontContext must be used within a FontContext');
+    expect(() => render(<DummyComponent />)).toThrowError(
+      'useFontContext must be used within a FontContext',
+    );
     error.mockRestore();
   });
 });

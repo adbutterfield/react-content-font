@@ -4,7 +4,10 @@ const DEFAULT_OPTIONS = {
   config: { childList: true, subtree: true, characterData: true },
 };
 
-export default function useMutationObserver(cb: (mutations: MutationRecord[]) => void, options = DEFAULT_OPTIONS) {
+export default function useMutationObserver(
+  cb: (mutations: MutationRecord[]) => void,
+  options = DEFAULT_OPTIONS,
+) {
   const [observer, setObserver] = useState<MutationObserver | null>(null);
 
   useEffect(() => {

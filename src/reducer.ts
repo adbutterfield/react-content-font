@@ -7,7 +7,9 @@ type State = {
   onLoad?: () => void;
 };
 
-export type Action = { type: 'INITIALIZE'; uniqueChars: Set<string> } | { type: 'ADD_LINK_TAG'; newChars: Set<string> };
+export type Action =
+  | { type: 'INITIALIZE'; uniqueChars: Set<string> }
+  | { type: 'ADD_LINK_TAG'; newChars: Set<string> };
 
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {

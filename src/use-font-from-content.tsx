@@ -6,7 +6,10 @@ import useMutationObserver from './use-mutation-observer';
 
 const filter = {
   acceptNode: function (node: Node) {
-    if (node.parentNode && (node.parentNode.nodeName === 'SCRIPT' || node.parentNode.nodeName === 'STYLE')) {
+    if (
+      node.parentNode &&
+      (node.parentNode.nodeName === 'SCRIPT' || node.parentNode.nodeName === 'STYLE')
+    ) {
       return NodeFilter.FILTER_REJECT;
     } else {
       return NodeFilter.FILTER_ACCEPT;
@@ -50,7 +53,10 @@ export default function useFontFromContent(
          * Even when we change the text content of an element directly using a ref in React, it will cause a 'childList' mutation and not a 'characterData' mutation.
          * However, this code block is retained for potential edge cases or non-typical React usage where 'characterData' mutations could be introduced.
          */
-        if (mutation.target.nodeType === Node.TEXT_NODE || mutation.target.nodeType === Node.ELEMENT_NODE) {
+        if (
+          mutation.target.nodeType === Node.TEXT_NODE ||
+          mutation.target.nodeType === Node.ELEMENT_NODE
+        ) {
           updatedNodes.push(mutation.target);
         }
       }
