@@ -1,11 +1,24 @@
 import React from 'react';
 
+export type FontWeights = Array<
+  | (100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)
+  | ['ital', 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900]
+>;
+
+function getWeights(fontWeights: FontWeights): string {
+  return fontWeights.reduce((acc, weight, index) => {
+    const newWeight = Array.isArray(weight) ? `1,${weight[1]}` : `0,${weight}`;
+    const separator = index === fontWeights.length - 1 ? '' : ';';
+    return (acc += `${newWeight}${separator}`);
+  }, '');
+}
+
 type CreateFontLinkTagsProps = {
   fontName: string;
   newChars: string[];
   onLoad?: () => void;
   display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
-  fontStyle?: 'ital';
+  fontWeights?: FontWeights;
 };
 
 export default function createFontLinkTags({
@@ -13,8 +26,15 @@ export default function createFontLinkTags({
   newChars,
   onLoad,
   display,
-  fontStyle,
+  fontWeights,
 }: CreateFontLinkTagsProps): React.ReactElement<HTMLLinkElement>[] {
+  const requestItalic = Boolean(
+    fontWeights &&
+      fontWeights.some(
+        (weight) => Array.isArray(weight) && weight.length === 2 && weight[0] === 'ital',
+      ),
+  );
+  const requestWeights = typeof fontWeights !== 'undefined';
   const batches = [];
   const batchSize = 200;
   let currentBatch = new Set<string>();
@@ -37,7 +57,9 @@ export default function createFontLinkTags({
   return batches.map((batch, index) => {
     const encodedText = encodeURIComponent(Array.from(batch).join(''));
     const url = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s/g, '+')}${
-      fontStyle ? `:${fontStyle}` : ''
+      requestItalic ? `:ital` : ''
+    }${requestItalic && requestWeights ? ',' : ''}${!requestItalic && requestWeights ? ':' : ''}${
+      requestWeights ? `wght@${getWeights(fontWeights)}` : ''
     }&text=${encodedText}&display=${display}`;
 
     if (onLoad && index === batches.length - 1) {

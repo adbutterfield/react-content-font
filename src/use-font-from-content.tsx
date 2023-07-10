@@ -3,6 +3,7 @@ import getUniqueCharsInPage from './get-unique-chars-in-page';
 import reducer from './reducer';
 import type { Action } from './reducer';
 import useMutationObserver from './use-mutation-observer';
+import type { FontWeights } from './create-font-link-tags';
 
 const filter = {
   acceptNode: function (node: Node) {
@@ -21,14 +22,14 @@ type UseFontFromContentProps = {
   fontName: string;
   onLoad?: () => void;
   display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
-  fontStyle?: 'ital';
+  fontWeights?: FontWeights;
 };
 
 export default function useFontFromContent({
   fontName,
   onLoad,
   display = 'swap',
-  fontStyle,
+  fontWeights,
 }: UseFontFromContentProps): {
   state: {
     linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
@@ -49,7 +50,7 @@ export default function useFontFromContent({
     requestedChars: new Set<string>(),
     onLoad,
     display,
-    fontStyle,
+    fontWeights,
   });
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {

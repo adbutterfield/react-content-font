@@ -41,7 +41,23 @@ function TestComponent() {
 
 function TestComponentWithFontStyle() {
   return (
-    <FontContext fontName="Noto Serif JP" fontStyle="ital">
+    <FontContext fontName="Noto Serif JP" fontWeights={[['ital', 400]]}>
+      <TestComponentContent />
+    </FontContext>
+  );
+}
+
+function TestComponentWithFontWeights() {
+  return (
+    <FontContext fontName="Noto Serif JP" fontWeights={[400, 600]}>
+      <TestComponentContent />
+    </FontContext>
+  );
+}
+
+function TestComponentWithFontWeightsAndStyle() {
+  return (
+    <FontContext fontName="Noto Serif JP" fontWeights={[400, 600, ['ital', 400], ['ital', 900]]}>
       <TestComponentContent />
     </FontContext>
   );
@@ -122,7 +138,27 @@ describe('<FontContext />', () => {
     const fontLinkTags = container.querySelectorAll('link[rel="stylesheet"]');
     expect(fontLinkTags[0].getAttribute('href')).not.toBeNull();
     // @ts-ignore checking for null above
-    expect(fontLinkTags[0].getAttribute('href').includes(':ital&')).toBe(true);
+    expect(fontLinkTags[0].getAttribute('href').includes(':ital,wght@1,400&')).toBe(true);
+  });
+
+  test('should add font weights to link tags', () => {
+    const { container } = render(<TestComponentWithFontWeights />);
+
+    const fontLinkTags = container.querySelectorAll('link[rel="stylesheet"]');
+    expect(fontLinkTags[0].getAttribute('href')).not.toBeNull();
+    // @ts-ignore checking for null above
+    expect(fontLinkTags[0].getAttribute('href').includes(':wght@0,400;0,600&')).toBe(true);
+  });
+
+  test('should add font weights and styles to link tags', () => {
+    const { container } = render(<TestComponentWithFontWeightsAndStyle />);
+
+    const fontLinkTags = container.querySelectorAll('link[rel="stylesheet"]');
+    expect(fontLinkTags[0].getAttribute('href')).not.toBeNull();
+    expect(
+      // @ts-ignore checking for null above
+      fontLinkTags[0].getAttribute('href').includes(':ital,wght@0,400;0,600;1,400;1,900&'),
+    ).toBe(true);
   });
 });
 

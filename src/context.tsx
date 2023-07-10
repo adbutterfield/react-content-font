@@ -3,9 +3,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import useFontFromContent from './use-font-from-content';
 
-// css2?family=Roboto:ital,wght@0,100;0,300;0,700;1,100;1,400;1,500;1,700;1,900
-// &display=swap
-
 type FontContextState =
   | {
       isFontLoaded: boolean;
@@ -18,16 +15,19 @@ type FontContextProps = {
   fontName: string;
   fallback?: React.FC<React.PropsWithChildren>;
   display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
-  fontStyle?: 'ital';
+  fontWeights?: Array<
+    | (100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)
+    | ['ital', 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900]
+  >;
 };
 
 export default function FontContext(props: React.PropsWithChildren<FontContextProps>) {
-  const { fontName, display = 'swap', fontStyle, children } = props;
+  const { fontName, display = 'swap', fontWeights, children } = props;
   const [isFontLoaded, setIsFontLoaded] = useState(false);
   const { state } = useFontFromContent({
     fontName,
     display,
-    fontStyle,
+    fontWeights,
     onLoad: () => setIsFontLoaded(true),
   });
   const { Provider: FontContextProvider } = context;
