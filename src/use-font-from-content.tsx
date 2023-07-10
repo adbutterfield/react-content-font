@@ -19,7 +19,7 @@ export default function useFontFromContent(
   onLoad?: () => void,
 ): {
   state: {
-    linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<any>>[];
+    linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
   };
   dispatch: React.Dispatch<Action>;
 } {
