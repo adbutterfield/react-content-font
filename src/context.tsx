@@ -42,6 +42,7 @@ export default function FontContext(props: React.PropsWithChildren<FontContextPr
 
 export function useFontContext(): {
   isFontLoaded: boolean;
+  isFontUpdating: boolean;
 } {
   const fontContext = useContext(context);
 
@@ -51,5 +52,5 @@ export function useFontContext(): {
     }
   }, [fontContext]);
 
-  return fontContext || { isFontLoaded: false };
+  return fontContext || { isFontLoaded: false, isFontUpdating: false };
 }
