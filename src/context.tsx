@@ -23,7 +23,7 @@ type FontContextProps = {
 export default function FontContext(props: React.PropsWithChildren<FontContextProps>) {
   const { fontName, display = 'swap', fontWeights, children } = props;
   const [isFontLoaded, setIsFontLoaded] = useState(false);
-  const { state } = useFontFromContent({
+  const { linkTags } = useFontFromContent({
     fontName,
     display,
     fontWeights,
@@ -33,7 +33,7 @@ export default function FontContext(props: React.PropsWithChildren<FontContextPr
 
   return (
     <FontContextProvider value={{ isFontLoaded }}>
-      {state.linkTags}
+      {linkTags}
       {children}
     </FontContextProvider>
   );

@@ -8,9 +8,7 @@ function TestComponent() {
   const [showExtraElementNode, setShowExtraElementNode] = useState(false);
   const [showExtraTextNode, setShowExtraTextNode] = useState(false);
   const [showDoubleTextNode, setShowDoubleTextNode] = useState(false);
-  const {
-    state: { linkTags },
-  } = useFontFromContent({ fontName: 'Noto Serif JP' });
+  const { linkTags } = useFontFromContent({ fontName: 'Noto Serif JP' });
 
   return (
     <>
@@ -49,9 +47,7 @@ function TestComponent() {
 }
 
 function LongTextTestComponent() {
-  const {
-    state: { linkTags },
-  } = useFontFromContent({ fontName: 'Noto Serif JP' });
+  const { linkTags } = useFontFromContent({ fontName: 'Noto Serif JP' });
 
   return (
     <>

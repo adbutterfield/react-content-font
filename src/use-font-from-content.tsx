@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer, useCallback } from 'react';
 import getUniqueCharsInPage from './get-unique-chars-in-page';
 import reducer from './reducer';
-import type { Action } from './reducer';
 import useMutationObserver from './use-mutation-observer';
 import type { FontWeights, Display } from './create-font-link-tags';
 
@@ -31,10 +30,7 @@ export default function useFontFromContent({
   display = 'swap',
   fontWeights,
 }: UseFontFromContentProps): {
-  state: {
-    linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
-  };
-  dispatch: React.Dispatch<Action>;
+  linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
 } {
   const [state, dispatch] = useReducer(reducer, {
     fontName,
@@ -102,5 +98,5 @@ export default function useFontFromContent({
     });
   }, []);
 
-  return { state: { linkTags: state.linkTags }, dispatch };
+  return { linkTags: state.linkTags };
 }
