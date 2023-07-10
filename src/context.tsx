@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import useFontFromContent from './use-font-from-content';
 
 type FontContextState =
@@ -39,12 +39,16 @@ export default function FontContext(props: React.PropsWithChildren<FontContextPr
   );
 }
 
-export function useFontContext() {
+export function useFontContext(): {
+  isFontLoaded: boolean;
+} {
   const fontContext = useContext(context);
 
-  if (fontContext === undefined) {
-    throw new Error('useFontContext must be used within a FontContext');
-  }
+  useEffect(() => {
+    if (!fontContext) {
+      throw new Error('useFontContext must be used within a FontContext');
+    }
+  }, [fontContext]);
 
-  return fontContext;
+  return fontContext || { isFontLoaded: false };
 }
