@@ -471,10 +471,15 @@ describe('useFontFromContent', () => {
   test('should initialize with preconnect link tag', () => {
     const { container } = render(<TestComponent />);
 
-    const preconnectLink = container.querySelector(
-      'link[rel="preconnect"][href="https://fonts.gstatic.com/"]',
+    const gstaticLink = container.querySelector(
+      'link[rel="preconnect"][href="https://fonts.gstatic.com"]',
     );
-    expect(preconnectLink).toBeInTheDocument();
+    expect(gstaticLink).toBeInTheDocument();
+
+    const googleapisLink = container.querySelector(
+      'link[rel="preconnect"][href="https://fonts.googleapis.com"]',
+    );
+    expect(googleapisLink).toBeInTheDocument();
   });
 
   test('should request font link tags on mount', () => {

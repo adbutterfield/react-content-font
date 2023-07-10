@@ -28,7 +28,15 @@ export default function useFontFromContent(
 } {
   const [state, dispatch] = useReducer(reducer, {
     fontName,
-    linkTags: [<link rel="preconnect" href="https://fonts.gstatic.com/" key="preconnect" />],
+    linkTags: [
+      <link key="preconnect-googleapis" rel="preconnect" href="https://fonts.googleapis.com" />,
+      <link
+        key="preconnect-gstatic"
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin=""
+      />,
+    ],
     requestedChars: new Set<string>(),
     onLoad,
   });
