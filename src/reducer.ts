@@ -1,12 +1,12 @@
 import createFontLinkTags from './create-font-link-tags';
-import type { FontWeights } from './create-font-link-tags';
+import type { FontWeights, Display } from './create-font-link-tags';
 
 export type State = {
   fontName: string;
   linkTags: React.ReactElement<HTMLLinkElement>[];
   requestedChars: Set<string>;
   onLoad?: () => void;
-  display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  display: Display;
   fontWeights?: FontWeights;
 };
 

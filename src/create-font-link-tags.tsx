@@ -5,6 +5,8 @@ export type FontWeights = Array<
   | ['ital', 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900]
 >;
 
+export type Display = 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+
 function getWeights(fontWeights: FontWeights): string {
   return fontWeights.reduce((acc, weight, index) => {
     const newWeight = Array.isArray(weight) ? `1,${weight[1]}` : `0,${weight}`;
@@ -17,7 +19,7 @@ type CreateFontLinkTagsProps = {
   fontName: string;
   newChars: string[];
   onLoad?: () => void;
-  display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  display: Display;
   fontWeights?: FontWeights;
 };
 

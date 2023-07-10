@@ -3,7 +3,7 @@ import getUniqueCharsInPage from './get-unique-chars-in-page';
 import reducer from './reducer';
 import type { Action } from './reducer';
 import useMutationObserver from './use-mutation-observer';
-import type { FontWeights } from './create-font-link-tags';
+import type { FontWeights, Display } from './create-font-link-tags';
 
 const filter = {
   acceptNode: function (node: Node) {
@@ -21,7 +21,7 @@ const filter = {
 type UseFontFromContentProps = {
   fontName: string;
   onLoad?: () => void;
-  display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+  display?: Display;
   fontWeights?: FontWeights;
 };
 
