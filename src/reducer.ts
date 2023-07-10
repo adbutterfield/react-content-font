@@ -1,10 +1,11 @@
 import createFontLinkTags from './create-font-link-tags';
 
-type State = {
+export type State = {
   fontName: string;
   linkTags: React.ReactElement<HTMLLinkElement>[];
   requestedChars: Set<string>;
   onLoad?: () => void;
+  display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
 };
 
 export type Action =
@@ -14,7 +15,12 @@ export type Action =
 export default function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'INITIALIZE': {
-      const linkTags = createFontLinkTags(state.fontName, [...action.uniqueChars], state.onLoad);
+      const linkTags = createFontLinkTags({
+        fontName: state.fontName,
+        newChars: [...action.uniqueChars],
+        onLoad: state.onLoad,
+        display: state.display,
+      });
       return {
         ...state,
         linkTags: [...state.linkTags, ...linkTags],
@@ -24,7 +30,12 @@ export default function reducer(state: State, action: Action): State {
     case 'ADD_LINK_TAG': {
       const newChars = [...action.newChars].filter((char) => !state.requestedChars.has(char));
       if (newChars.length > 0) {
-        const newLinkTags = createFontLinkTags(state.fontName, newChars, state.onLoad);
+        const newLinkTags = createFontLinkTags({
+          fontName: state.fontName,
+          newChars,
+          onLoad: state.onLoad,
+          display: state.display,
+        });
         return {
           ...state,
           linkTags: [...state.linkTags, ...newLinkTags],

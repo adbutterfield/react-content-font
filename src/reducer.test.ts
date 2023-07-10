@@ -1,14 +1,16 @@
 import { renderHook, act } from '@testing-library/react';
 import { useReducer } from 'react';
 import reducer from './reducer';
+import type { State } from './reducer';
 
 describe('reducer', () => {
   it('returns the current state when it does not understand the action type', () => {
-    const initialState = {
+    const initialState: State = {
       fontName: 'Test Font',
       linkTags: [],
       requestedChars: new Set<string>(),
       onLoad: jest.fn(),
+      display: 'swap',
     };
 
     const { result } = renderHook(() => useReducer(reducer, initialState));

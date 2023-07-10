@@ -17,10 +17,17 @@ const filter = {
   },
 };
 
-export default function useFontFromContent(
-  fontName: string,
-  onLoad?: () => void,
-): {
+type UseFontFromContentProps = {
+  fontName: string;
+  onLoad?: () => void;
+  display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+};
+
+export default function useFontFromContent({
+  fontName,
+  onLoad,
+  display = 'swap',
+}: UseFontFromContentProps): {
   state: {
     linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
   };
@@ -39,6 +46,7 @@ export default function useFontFromContent(
     ],
     requestedChars: new Set<string>(),
     onLoad,
+    display,
   });
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {

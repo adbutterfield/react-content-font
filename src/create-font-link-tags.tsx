@@ -1,15 +1,23 @@
 import React from 'react';
 
-export default function createFontLinkTags(
-  fontName: string,
-  uniqueChars: string[],
-  onLoad?: () => void,
-): React.ReactElement<HTMLLinkElement>[] {
+type CreateFontLinkTagsProps = {
+  fontName: string;
+  newChars: string[];
+  onLoad?: () => void;
+  display: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+};
+
+export default function createFontLinkTags({
+  fontName,
+  newChars,
+  onLoad,
+  display,
+}: CreateFontLinkTagsProps): React.ReactElement<HTMLLinkElement>[] {
   const batches = [];
   const batchSize = 200;
   let currentBatch = new Set<string>();
 
-  for (const char of uniqueChars) {
+  for (const char of newChars) {
     currentBatch.add(char);
 
     if (currentBatch.size === batchSize) {
@@ -27,7 +35,7 @@ export default function createFontLinkTags(
     const url = `https://fonts.googleapis.com/css2?family=${fontName.replace(
       /\s/g,
       '+',
-    )}&text=${encodedText}`;
+    )}&text=${encodedText}&display=${display}`;
 
     if (onLoad && index === batches.length - 1) {
       return <link rel="stylesheet" href={url} key={encodedText.slice(0, 10)} onLoad={onLoad} />;
