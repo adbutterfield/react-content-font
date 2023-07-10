@@ -13,7 +13,6 @@ const context = createContext<FontContextState>(undefined);
 
 type FontContextProps = {
   fontName: string;
-  fallback?: React.FC<React.PropsWithChildren>;
   display?: 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
   fontWeights?: Array<
     | (100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900)
@@ -32,26 +31,10 @@ export default function FontContext(props: React.PropsWithChildren<FontContextPr
   });
   const { Provider: FontContextProvider } = context;
 
-  // const FallbackComponent = fallback;
-
-  // const loadingStyles: Partial<React.CSSProperties> = {
-  //   left: 0,
-  //   position: 'absolute',
-  //   top: 0,
-  //   visibility: 'hidden',
-  // };
-
   return (
     <FontContextProvider value={{ isFontLoaded }}>
       {state.linkTags}
       {children}
-      {/* {FallbackComponent && !isFontLoaded && (
-        <FallbackComponent>
-          <div style={loadingStyles}>{children}</div>
-        </FallbackComponent>
-      )}
-      {!FallbackComponent && !isFontLoaded && <div style={loadingStyles}>{children}</div>}
-      {isFontLoaded && children} */}
     </FontContextProvider>
   );
 }
