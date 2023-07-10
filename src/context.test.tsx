@@ -100,6 +100,11 @@ describe('<FontContext />', () => {
   });
 });
 
+const DummyComponent = () => {
+  useFontContext();
+  return null;
+};
+
 describe('useFontContext', () => {
   test('should set isFontLoaded to true after font is loaded', async () => {
     const { container } = render(<TestComponent />);
@@ -110,5 +115,13 @@ describe('useFontContext', () => {
     await waitFor(() => {
       expect(screen.getByTestId('content')).toBeVisible();
     });
+  });
+
+  test('throws an error when used outside FontContext', () => {
+    // silence error logw for this test
+    const error = jest.spyOn(console, 'error');
+    error.mockImplementation(jest.fn());
+    expect(() => render(<DummyComponent />)).toThrowError('useFontContext must be used within a FontContext');
+    error.mockRestore();
   });
 });

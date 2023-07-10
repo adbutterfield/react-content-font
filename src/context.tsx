@@ -3,11 +3,13 @@
 import React, { createContext, useContext, useState } from 'react';
 import useFontFromContent from './use-font-from-content';
 
-type FontContextState = {
-  isFontLoaded: boolean;
-};
+type FontContextState =
+  | {
+      isFontLoaded: boolean;
+    }
+  | undefined;
 
-const context = createContext<FontContextState>({ isFontLoaded: false });
+const context = createContext<FontContextState>(undefined);
 
 type FontContextProps = {
   fontName: string;
