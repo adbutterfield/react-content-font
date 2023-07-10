@@ -4,6 +4,6 @@
     "module": "commonjs",
     "allowJs": true
   },
-  "include": ["src"],
+  "include": ["src", "rollup.config.ts", "rollup.min.config.ts"],
   "exclude": ["node_modules"]
 }

@@ -19,6 +19,6 @@
     "typeRoots": ["src/types.d.ts", "./node_modules/@types"],
     "resolveJsonModule": true
   },
-  "include": ["src", "src/types.d.ts", "rollup.config.ts", "rollup.min.config.ts"],
+  "include": ["src"],
   "exclude": ["node_modules", "src/*.test.*"]
 }
