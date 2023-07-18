@@ -130,7 +130,7 @@ export default function PageText() {
 }
 ```
 
-It's important to note, that **you must render the text**, or else the characters will not be discovered and won't be included in the requested font.
+It's important to note, that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
 
 For example, **DO NOT DO THIS**:
 
@@ -178,4 +178,4 @@ export default function PageText() {
 }
 ```
 
-It's important to note, that **you must render the text**, or else the characters will not be discovered and won't be included in the requested font.
+It's important to note, that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
