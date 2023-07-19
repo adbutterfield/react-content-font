@@ -1,6 +1,6 @@
 {
   "name": "react-content-font",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "React hook to scan your web page, and generate Google font for only used characters. Especially useful for Japanese and other fonts that contain a lot of characters.",
   "author": "<adam.butterfield@ymail.com>",
   "license": "MIT",
