@@ -184,6 +184,4 @@ It's important to note, that **YOU MUST RENDER THE TEXT**, or else the character
 
 Yes please!
 
-<pre>
 <a href="https://www.buymeacoffee.com/adbutterfield" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
-</pre>
