@@ -6,27 +6,27 @@
 - [日本語](README_JP.md)
 - [中文](README_ZH.md)
 
-## How to install?
+## インストール方法は？
 
 `npm install react-content-font`
 
-## Why should I care about this package?
+## このパッケージがなぜ重要なのか？
 
-If you're developing React applications for languages like Japanese, and want to use non-system fonts, you might find this package interesting.
+日本語等、フォントファイルの大きな言語でReactアプリケーションを開発し、システムフォント以外を使用したい場合、このパッケージは便利です。
 
-Fonts for languages like Japanese, are very big. A single font weight for [Noto Sans Japanese](https://fonts.google.com/noto/specimen/Noto+Sans+JP?query=noto+sans+jp) for instance is 5.7 MB. Definitely not ideal to make your users download such a big file. Not to mention if you want more than one font weight...
+日本語のような言語のフォントファイルは非常に大きいです。たとえば、[Noto Sans Japanese](https://fonts.google.com/noto/specimen/Noto+Sans+JP?query=noto+sans+jp)の単一のフォントウェイトは5.7 MBです。ユーザーにこれほど大きなファイルをダウンロードさせるのは理想的ではありません。一つ以上のフォントウェイトが必要な場合など...
 
-## What does this thing do?
+## このパッケージは何をしますか？
 
-This package will check a page, get a list of unique characters on that page, and then request a font from [Google Fonts](https://fonts.google.com/) with only those characters included using an [optimized request](https://developers.google.com/fonts/docs/getting_started#optimizing_your_font_requests)!
+このパッケージはページをチェックし、そのページのユニークな文字のリストを取得し、それらの文字のみを含むフォントを[Google Fonts](https://fonts.google.com/)から[最適化されたリクエスト](https://developers.google.com/fonts/docs/getting_started#optimizing_your_font_requests)でリクエストします！
 
-On initial render, it uses [createTreeWalker](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTreeWalker) to efficiently walk the DOM and get all the characters. After initial render, it uses [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) and checks only the updated nodes for new text that get added dynamically.
+初期レンダリングでは、[createTreeWalker](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTreeWalker)を使用して効率的にDOMを走査し、すべての文字を取得します。初期レンダリング後は、[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)を使用して、動的に追加される新しいテキストのみをチェックします。
 
-## How to use it?
+## 使い方は？
 
-It's as simple as adding the context provider somewhere high up in you application.
+アプリケーションのトップレベルにコンテキストプロバイダーを追加するだけです。
 
-For example, if you have a [Next.js](https://nextjs.org/) app using App Router, you can update your `app/layout.tsx` file like so:
+例えば、App Routerを使用した[Next.js](https://nextjs.org/)アプリがある場合、`app/layout.tsx`ファイルを以下のように更新できます：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -42,11 +42,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Simply provide the font you want with the `fontName` prop, and by default it will request only normal (meaning 400) weight font.
+`fontName` プロパティで希望するフォントを提供するだけで、デフォルトでは正常（つまり400）ウェイトのフォントのみをリクエストします。
 
-## What if I want more than one font weight?
+## もし一つ以上のフォントウェイトが欲しい場合は？
 
-Requesting additional font weights is as simple as adding the `fontWeights` prop, like so:
+追加のフォントウェイトをリクエストするには、`fontWeights` プロパティを追加するだけです：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -64,9 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-## What if I also want italic for some font weights?
+## もし一部のフォントウェイトで斜体を欲しい場合は？
 
-I'm not sure any Japanese fonts have italic variants, but maybe the font you want to use does? If so, you can request italic variants for whatever weight you desire, like so:
+日本語のフォントには斜体のバリアントが無い場合が多いですが、使用するフォントによってはあるかもしれません。その場合、以下のようにして、希望するウェイトの斜体バリアントをリクエストできます：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -87,13 +87,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-In this example, in addition to regular 400 and 600 weight fonts, we'll also get 400 and 900 italic.
+この例では、通常の400と600ウェイトのフォントに加えて、400と900のイタリックも取得します。
 
-## What if I want to pick the font-display?
+## もし私がfont-displayを選びたい場合はどうすればいいですか？
 
-In the [Google Fonts API](https://developers.google.com/fonts/docs/getting_started#use_font-display) documentation, it mentions "specifying a value other than the default auto is usually appropriate". By default when you generate a link tag for a Google Font, it sets `display=swap`. So this package will do the same thing.
+[Google Fonts API](https://developers.google.com/fonts/docs/getting_started#use_font-display) のドキュメンテーションでは、"デフォルトのauto以外の値を指定することが通常は適切です"と述べられています。Google Fontのリンクタグを生成するときにはデフォルトで`display=swap`が設定されます。ですから、このパッケージも同様のことを行います。
 
-But if you want something else, all you need to do is set the `display` prop, like so:
+しかし、他の何かを望む場合は、以下のように `display` プロパティを設定するだけです：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -111,13 +111,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Valid values for `display` are `'auto' | 'block' | 'swap' | 'fallback' | 'optional'`.
+`display` の有効な値は `'auto' | 'block' | 'swap' | 'fallback' | 'optional'`です。
 
-## What if I want to wait for the font to be loaded before showing content, or show a loading state or something?
+## コンテンツを表示する前にフォントがロードされるのを待つ、またはローディング状態を表示したい場合は？
 
-Luckily for you, this package also exports a hook for the context with a flag that will let you know if the font is loaded.
+幸いなことに、このパッケージはフォントがロードされているかどうかを知らせてくれるフラグを持つコンテキストのフックもエクスポートしています。
 
-Here is an example of a `PageText` component, that changes the `display` from `hidden` to `visible` based on context.
+以下に`PageText`コンポーネントの例を示します。このコンポーネントは、コンテキストに基づいて`display`を`hidden`から`visible`に変更します。
 
 ```tsx
 'use client';
@@ -136,9 +136,9 @@ export default function PageText() {
 }
 ```
 
-It's important to note that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
+ここで注意すべき点は、**必ずテキストをレンダリングする必要がある**ということです。
 
-For example, **DO NOT DO THIS**:
+例えば、**次のようなことはしないでください**：
 
 ```tsx
 'use client';
@@ -161,11 +161,11 @@ export default function PageText() {
 }
 ```
 
-## What if I want to do something similar to that last thing, but after the initial render?
+## 初期レンダリング後に、先ほどと同様の操作を行いたい場合は？
 
-Luckily for you, there's another flag in the context that lets you know if the font is being updated.
+幸いなことに、コンテキストにはフォントが更新されているかどうかを知らせる別のフラグがあります。
 
-Similar to the previous example, you can defer showing content on update, like so:
+前の例と同様に、更新時のコンテンツの表示を遅延させることができます：
 
 ```tsx
 'use client';
@@ -184,10 +184,10 @@ export default function PageText() {
 }
 ```
 
-It's important to note that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
+ここで注意すべき点は、**必ずテキストをレンダリングする必要がある**ということです。
 
-## This is cool, can I buy you a coffee?
+## これは素晴らしいです、コーヒーをご馳走できますか？
 
-Yes please!
+ぜひお願いします！
 
 <a href="https://www.buymeacoffee.com/adbutterfield" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>

@@ -6,27 +6,27 @@
 - [日本語](README_JP.md)
 - [中文](README_ZH.md)
 
-## How to install?
+## 如何进行安装？
 
 `npm install react-content-font`
 
-## Why should I care about this package?
+## 为什么我应该对此包进行关注？
 
-If you're developing React applications for languages like Japanese, and want to use non-system fonts, you might find this package interesting.
+如果你正在为如日语这类语言开发React应用，并且希望使用非系统字体，那么你可能会对此包产生兴趣。
 
-Fonts for languages like Japanese, are very big. A single font weight for [Noto Sans Japanese](https://fonts.google.com/noto/specimen/Noto+Sans+JP?query=noto+sans+jp) for instance is 5.7 MB. Definitely not ideal to make your users download such a big file. Not to mention if you want more than one font weight...
+如日语这类语言的字体文件体积巨大。例如，[Noto Sans Japanese](https://fonts.google.com/noto/specimen/Noto+Sans+JP?query=noto+sans+jp)的单个字重（font weight）就有5.7 MB。让你的用户下载这样大的文件显然不理想。尤其是如果你需要的不止一个字重...
 
-## What does this thing do?
+## 这个包能做什么？
 
-This package will check a page, get a list of unique characters on that page, and then request a font from [Google Fonts](https://fonts.google.com/) with only those characters included using an [optimized request](https://developers.google.com/fonts/docs/getting_started#optimizing_your_font_requests)!
+此包能检查一个页面，提取出该页面上所有的独特字符，并使用[优化请求](https://developers.google.com/fonts/docs/getting_started#optimizing_your_font_requests)从[Google Fonts](https://fonts.google.com/)请求只包含这些字符的字体！
 
-On initial render, it uses [createTreeWalker](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTreeWalker) to efficiently walk the DOM and get all the characters. After initial render, it uses [MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) and checks only the updated nodes for new text that get added dynamically.
+在初始渲染时，它使用[createTreeWalker](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTreeWalker)高效地遍历DOM并获取所有字符。在初始渲染之后，它使用[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver) 只检查那些动态添加了新文本的更新节点。
 
-## How to use it?
+## 如何使用？
 
-It's as simple as adding the context provider somewhere high up in you application.
+使用方式非常简单，只需在应用的某个高层次位置添加上下文提供者即可。
 
-For example, if you have a [Next.js](https://nextjs.org/) app using App Router, you can update your `app/layout.tsx` file like so:
+例如，如果你有一个使用 App Router 的 [Next.js](https://nextjs.org/)应用，你可以像这样更新你的 `app/layout.tsx`文件：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -42,11 +42,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Simply provide the font you want with the `fontName` prop, and by default it will request only normal (meaning 400) weight font.
+只需通过 `fontName` 属性提供你需要的字体，默认情况下它将只请求普通的字重（也就是400）。
 
-## What if I want more than one font weight?
+如果我需要多个字重怎么办？
 
-Requesting additional font weights is as simple as adding the `fontWeights` prop, like so:
+请求额外字重只需要添加 `fontWeights` 属性，如下所示：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -64,9 +64,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-## What if I also want italic for some font weights?
+## 如果我需要某些字重的斜体呢？
 
-I'm not sure any Japanese fonts have italic variants, but maybe the font you want to use does? If so, you can request italic variants for whatever weight you desire, like so:
+我不确定是否有日语字体包含斜体样式，但也许你需要使用的字体有？如果是这样，你可以按照下面的方式请求你需要的任何字重的斜体样式：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -87,13 +87,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-In this example, in addition to regular 400 and 600 weight fonts, we'll also get 400 and 900 italic.
+在这个例子中，除了常规的400和600字重，我们还会获取到400和900的斜体。
 
-## What if I want to pick the font-display?
+## 如果我想选择font-display的值怎么办？
 
-In the [Google Fonts API](https://developers.google.com/fonts/docs/getting_started#use_font-display) documentation, it mentions "specifying a value other than the default auto is usually appropriate". By default when you generate a link tag for a Google Font, it sets `display=swap`. So this package will do the same thing.
+在[Google Fonts API](https://developers.google.com/fonts/docs/getting_started#use_font-display)文档中，它提到 "通常更适合指定除默认 auto 以外的值"。默认情况下，当你为 Google Font 生成一个链接标签时，它设置 `display=swap`。因此，这个包也会采用相同的设置。
 
-But if you want something else, all you need to do is set the `display` prop, like so:
+但是，如果你需要别的配置，只需设置 `display` 属性即可，如下：
 
 ```tsx
 import FontProvider from 'react-content-font';
@@ -111,13 +111,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }
 ```
 
-Valid values for `display` are `'auto' | 'block' | 'swap' | 'fallback' | 'optional'`.
+`display` 的有效值是 `'auto' | 'block' | 'swap' | 'fallback' | 'optional'`。
 
-## What if I want to wait for the font to be loaded before showing content, or show a loading state or something?
+## 如果我想在字体加载完毕后再显示内容，或者展示一个加载状态之类的呢？
 
-Luckily for you, this package also exports a hook for the context with a flag that will let you know if the font is loaded.
+幸运的是，这个包还导出了一个具有标志位的上下文挂钩，它能让你知道字体是否已经加载完毕。
 
-Here is an example of a `PageText` component, that changes the `display` from `hidden` to `visible` based on context.
+下面是一个`PageText`组件的例子，该组件根据上下文将`display`从`hidden`改变为`visible`。
 
 ```tsx
 'use client';
@@ -136,9 +136,9 @@ export default function PageText() {
 }
 ```
 
-It's important to note that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
+重要的一点是，**你必须渲染文本**否则字符将不会被发现，并且不会被包含在请求的字体中。
 
-For example, **DO NOT DO THIS**:
+例如，**不要这样做**：
 
 ```tsx
 'use client';
@@ -161,11 +161,11 @@ export default function PageText() {
 }
 ```
 
-## What if I want to do something similar to that last thing, but after the initial render?
+## 如果我想做类似的事情，但是在初始渲染之后呢？
 
-Luckily for you, there's another flag in the context that lets you know if the font is being updated.
+幸运的是，上下文中还有另一个标志位，它能让你知道字体是否正在被更新。
 
-Similar to the previous example, you can defer showing content on update, like so:
+与前面的例子类似，你可以推迟显示更新的内容，像这样：
 
 ```tsx
 'use client';
@@ -184,10 +184,10 @@ export default function PageText() {
 }
 ```
 
-It's important to note that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
+重要的一点是，**你必须渲染文本**否则字符将不会被发现，并且不会被包含在请求的字体中。
 
-## This is cool, can I buy you a coffee?
+## 这真酷，我可以请你喝咖啡吗？
 
-Yes please!
+当然可以！
 
 <a href="https://www.buymeacoffee.com/adbutterfield" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
