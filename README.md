@@ -179,3 +179,11 @@ export default function PageText() {
 ```
 
 It's important to note, that **YOU MUST RENDER THE TEXT**, or else the characters will not be discovered and won't be included in the requested font.
+
+## This is cool, can I buy you a coffee?
+
+Yes please!
+
+<pre>
+<a href="https://www.buymeacoffee.com/adbutterfield" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+</pre>
