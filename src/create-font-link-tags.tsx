@@ -54,8 +54,6 @@ export default function createFontLinkTags({
     batches.push(currentBatch);
   }
 
-  // css2?family=Roboto:ital,wght@0,100;0,300;0,700;1,100;1,400;1,500;1,700;1,900
-
   return batches.map((batch, index) => {
     const encodedText = encodeURIComponent(Array.from(batch).join(''));
     const url = `https://fonts.googleapis.com/css2?family=${fontName.replace(/\s/g, '+')}${
