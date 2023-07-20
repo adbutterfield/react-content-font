@@ -56,26 +56,34 @@ export default function useFontFromContent({
     const updatedNodes: Node[] = [];
 
     mutations.forEach((mutation) => {
-      if (mutation.type === 'childList') {
-        mutation.addedNodes.forEach((addedNode) => {
-          if (addedNode.nodeType === Node.TEXT_NODE || addedNode.nodeType === Node.ELEMENT_NODE) {
-            addedNodes.push(addedNode);
+      switch (mutation.type) {
+        case 'childList': {
+          mutation.addedNodes.forEach((addedNode) => {
+            if (addedNode.nodeType === Node.TEXT_NODE || addedNode.nodeType === Node.ELEMENT_NODE) {
+              addedNodes.push(addedNode);
+            }
+          });
+          break;
+        }
+        case 'characterData': {
+          /**
+           * This block of code checks for 'characterData' mutations.
+           * As per the DOM specification, a 'characterData' mutation occurs when the data of a text node directly changes.
+           * In a typical React application, you would not expect a 'characterData' mutation.
+           * This is because React's reconciliation process favors creating a new node over mutating existing nodes.
+           * Even when we change the text content of an element directly using a ref in React, it will cause a 'childList' mutation and not a 'characterData' mutation.
+           * However, this code block is retained for potential edge cases or non-typical React usage where 'characterData' mutations could be introduced.
+           */
+          if (
+            mutation.target.nodeType === Node.TEXT_NODE ||
+            mutation.target.nodeType === Node.ELEMENT_NODE
+          ) {
+            updatedNodes.push(mutation.target);
           }
-        });
-      } else if (mutation.type === 'characterData') {
-        /**
-         * This block of code checks for 'characterData' mutations.
-         * As per the DOM specification, a 'characterData' mutation occurs when the data of a text node directly changes.
-         * In a typical React application, you would not expect a 'characterData' mutation.
-         * This is because React's reconciliation process favors creating a new node over mutating existing nodes.
-         * Even when we change the text content of an element directly using a ref in React, it will cause a 'childList' mutation and not a 'characterData' mutation.
-         * However, this code block is retained for potential edge cases or non-typical React usage where 'characterData' mutations could be introduced.
-         */
-        if (
-          mutation.target.nodeType === Node.TEXT_NODE ||
-          mutation.target.nodeType === Node.ELEMENT_NODE
-        ) {
-          updatedNodes.push(mutation.target);
+          break;
+        }
+        default: {
+          break;
         }
       }
     });
