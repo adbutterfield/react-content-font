@@ -122,7 +122,6 @@ Here is an example of a `PageText` component, that changes the `display` from `h
 ```tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useFontContext } from 'react-content-font';
 
 export default function PageText() {
@@ -143,7 +142,6 @@ For example, **DO NOT DO THIS**:
 ```tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useFontContext } from 'react-content-font';
 
 export default function PageText() {
@@ -170,7 +168,6 @@ Similar to the previous example, you can defer showing content on update, like s
 ```tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useFontContext } from 'react-content-font';
 
 export default function PageText() {

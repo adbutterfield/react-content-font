@@ -122,7 +122,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 ```tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useFontContext } from 'react-content-font';
 
 export default function PageText() {
@@ -143,7 +142,6 @@ export default function PageText() {
 ```tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useFontContext } from 'react-content-font';
 
 export default function PageText() {
@@ -170,7 +168,6 @@ export default function PageText() {
 ```tsx
 'use client';
 
-import { useEffect } from 'react';
 import { useFontContext } from 'react-content-font';
 
 export default function PageText() {
