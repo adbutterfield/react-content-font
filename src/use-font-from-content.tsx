@@ -52,15 +52,14 @@ export default function useFontFromContent({
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {
     dispatch({ type: 'FONT_UPDATING' });
-    const addedNodes: Node[] = [];
-    const updatedNodes: Node[] = [];
+    const mutatedNodes: Node[] = [];
 
     mutations.forEach((mutation) => {
       switch (mutation.type) {
         case 'childList': {
           mutation.addedNodes.forEach((addedNode) => {
             if (addedNode.nodeType === Node.TEXT_NODE || addedNode.nodeType === Node.ELEMENT_NODE) {
-              addedNodes.push(addedNode);
+              mutatedNodes.push(addedNode);
             }
           });
           break;
@@ -78,19 +77,14 @@ export default function useFontFromContent({
             mutation.target.nodeType === Node.TEXT_NODE ||
             mutation.target.nodeType === Node.ELEMENT_NODE
           ) {
-            updatedNodes.push(mutation.target);
+            mutatedNodes.push(mutation.target);
           }
-          break;
-        }
-        default: {
-          break;
         }
       }
     });
 
-    const allChangedNodes = [...addedNodes, ...updatedNodes];
-    if (allChangedNodes.length > 0) {
-      const newChars = getUniqueCharsInPage(allChangedNodes);
+    if (mutatedNodes.length > 0) {
+      const newChars = getUniqueCharsInPage(mutatedNodes);
       if (newChars.size > 0) {
         dispatch({ type: 'ADD_LINK_TAG', newChars });
       }
