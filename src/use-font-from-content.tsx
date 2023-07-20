@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useCallback } from 'react';
 import getUniqueCharsInPage from './get-unique-chars-in-page';
 import reducer from './reducer';
+import type { State } from './reducer';
 import useMutationObserver from './use-mutation-observer';
 import type { FontWeights, Display } from './create-font-link-tags';
 
@@ -15,6 +16,21 @@ const filter = {
       return NodeFilter.FILTER_ACCEPT;
     }
   },
+};
+
+const partialInitialState: Omit<State, 'fontName' | 'display' | 'fontWeights'> = {
+  linkTags: [
+    <link key="preconnect-googleapis" rel="preconnect" href="https://fonts.googleapis.com" />,
+    <link
+      key="preconnect-gstatic"
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossOrigin=""
+    />,
+  ],
+  requestedChars: new Set<string>(),
+  isFontUpdating: false,
+  isFontLoaded: false,
 };
 
 type UseFontFromContentProps = {
@@ -33,21 +49,10 @@ export default function useFontFromContent({
   isFontLoaded: boolean;
 } {
   const [state, dispatch] = useReducer(reducer, {
+    ...partialInitialState,
     fontName,
-    linkTags: [
-      <link key="preconnect-googleapis" rel="preconnect" href="https://fonts.googleapis.com" />,
-      <link
-        key="preconnect-gstatic"
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin=""
-      />,
-    ],
-    requestedChars: new Set<string>(),
     display,
     fontWeights,
-    isFontUpdating: false,
-    isFontLoaded: false,
   });
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {
