@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import FontContext, { useFontContext } from './context';
 
 function TestComponentContent() {
-  const { isFontLoaded } = useFontContext();
+  const { isFontLoaded, isFontUpdating } = useFontContext();
   const [showExtraElementNode, setShowExtraElementNode] = useState(false);
   const [showExtraTextNode, setShowExtraTextNode] = useState(false);
   const [showDoubleTextNode, setShowDoubleTextNode] = useState(false);
@@ -27,6 +27,7 @@ function TestComponentContent() {
           たとえば常に陰ご意味かもに与えているますものは、心的一種といった事は文壇的朋党に申して、もし自力が大きく訳のようにやっ方ませ。一生方たり間接からは博奕も事悪いけれどもも、人々はとうとうよっしでた。相当がし、他とあり、主義人に嫌う、正直でのませんず。そうして所々で他を見るうち、人で自分とやま上、すこぶる自由です詩にするから人身でするたているうば、教授自己の鉱脈でするば、あなたで不安正しいしからおきものなて使おたて下さいんた。否域の不愉快だうちには、壇がない富去就からすこぶる会員がある訳に、私がはざっとどうのようにするられた。
         </p>
       )}
+      {isFontUpdating && <p>font updating</p>}
     </div>
   );
 }
@@ -94,7 +95,7 @@ describe('<FontContext />', () => {
 
     expect(container.querySelectorAll('link[rel="stylesheet"]').length).toEqual(1);
     await user.click(screen.getByText('show extra text'));
-    expect(container.querySelectorAll('link[rel="stylesheet"]').length).toEqual(2);
+    expect(container.querySelectorAll('link[rel="stylesheet"]').length).toEqual(3);
     const fontLinkTags = container.querySelectorAll('link[rel="stylesheet"]');
     expect(fontLinkTags[0].getAttribute('href')).toEqual(
       'https://fonts.googleapis.com/css2?family=Noto+Serif+JP&text=show%20extradubl%E5%A4%9A%E5%B9%B4%E3%81%A7%E3%81%AF%E3%82%82%E3%81%97%E8%81%9E%E3%81%88%E3%82%8B%E3%81%B0%E5%90%88%E3%81%A3%E3%81%A0%E3%82%8D%E3%81%9F%E3%81%AA%E3%81%84%E3%81%A6%E3%80%81%E3%81%A8%E3%81%86%E3%81%A1%E3%82%83%E3%82%93%E6%95%99%E3%81%8A%E8%A9%B1%E3%81%9D%E8%A9%B3%E3%81%8F%E4%BA%8B%E3%80%82mn&display=swap',
@@ -112,7 +113,7 @@ describe('<FontContext />', () => {
     expect(screen.queryByTestId('extra-element')).toBeNull();
     await user.click(screen.getByText('show extra element'));
     expect(screen.getByTestId('extra-element')).toBeInTheDocument();
-    expect(container.querySelectorAll('link[rel="stylesheet"]').length).toEqual(2);
+    expect(container.querySelectorAll('link[rel="stylesheet"]').length).toEqual(3);
     const fontLinkTags = container.querySelectorAll('link[rel="stylesheet"]');
     expect(fontLinkTags[0].getAttribute('href')).toEqual(
       'https://fonts.googleapis.com/css2?family=Noto+Serif+JP&text=show%20extradubl%E5%A4%9A%E5%B9%B4%E3%81%A7%E3%81%AF%E3%82%82%E3%81%97%E8%81%9E%E3%81%88%E3%82%8B%E3%81%B0%E5%90%88%E3%81%A3%E3%81%A0%E3%82%8D%E3%81%9F%E3%81%AA%E3%81%84%E3%81%A6%E3%80%81%E3%81%A8%E3%81%86%E3%81%A1%E3%82%83%E3%82%93%E6%95%99%E3%81%8A%E8%A9%B1%E3%81%9D%E8%A9%B3%E3%81%8F%E4%BA%8B%E3%80%82mn&display=swap',
@@ -180,12 +181,53 @@ describe('useFontContext', () => {
   });
 
   test('throws an error when used outside FontContext', () => {
-    // silence error logw for this test
+    // silence error logs for this test
     const error = jest.spyOn(console, 'error');
     error.mockImplementation(jest.fn());
     expect(() => render(<DummyComponent />)).toThrowError(
       'useFontContext must be used within a FontContext',
     );
     error.mockRestore();
+  });
+
+  test('should set isFontUpdating correctly durning and after updates', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<TestComponent />);
+
+    expect(screen.getByTestId('content')).not.toBeVisible();
+    let linkElements = container.querySelectorAll('link');
+    fireEvent.load(linkElements[linkElements.length - 1]);
+    await waitFor(() => {
+      expect(screen.getByTestId('content')).toBeVisible();
+    });
+
+    expect(screen.queryByText('font updating')).toBeNull();
+    await user.click(screen.getByText('show extra text'));
+    await waitFor(() => {
+      expect(screen.getByText('font updating')).toBeVisible();
+    });
+    linkElements = container.querySelectorAll('link');
+    fireEvent.load(linkElements[linkElements.length - 1]);
+    await waitFor(() => {
+      expect(screen.queryByText('font updating')).toBeNull();
+    });
+  });
+
+  test('should set isFontUpdating correctly durning and after updates with no changes to text', async () => {
+    const user = userEvent.setup();
+    const { container } = render(<TestComponent />);
+
+    expect(screen.getByTestId('content')).not.toBeVisible();
+    const linkElements = container.querySelectorAll('link');
+    fireEvent.load(linkElements[linkElements.length - 1]);
+    await waitFor(() => {
+      expect(screen.getByTestId('content')).toBeVisible();
+    });
+
+    expect(screen.queryByText('font updating')).toBeNull();
+    await user.click(screen.getByText('show double text'));
+    await waitFor(() => {
+      expect(screen.queryByText('font updating')).toBeNull();
+    });
   });
 });

@@ -9,13 +9,13 @@ describe('reducer', () => {
       fontName: 'Test Font',
       linkTags: [],
       requestedChars: new Set<string>(),
-      onLoad: jest.fn(),
       display: 'swap',
+      isFontLoaded: false,
+      isFontUpdating: false,
     };
 
     const { result } = renderHook(() => useReducer(reducer, initialState));
 
-    //
     act(() => {
       // @ts-ignore Dispatch an action that the reducer does not understand.
       result.current[1]({ type: 'UNKNOWN_ACTION' });
