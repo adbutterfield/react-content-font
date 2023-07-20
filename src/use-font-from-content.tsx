@@ -19,19 +19,18 @@ const filter = {
 
 type UseFontFromContentProps = {
   fontName: string;
-  onLoad?: () => void;
   display?: Display;
   fontWeights?: FontWeights;
 };
 
 export default function useFontFromContent({
   fontName,
-  onLoad,
   display = 'swap',
   fontWeights,
 }: UseFontFromContentProps): {
   linkTags: React.ReactElement<HTMLLinkElement, string | React.JSXElementConstructor<unknown>>[];
   isFontUpdating: boolean;
+  isFontLoaded: boolean;
 } {
   const [state, dispatch] = useReducer(reducer, {
     fontName,
@@ -45,9 +44,10 @@ export default function useFontFromContent({
       />,
     ],
     requestedChars: new Set<string>(),
-    onLoad,
     display,
     fontWeights,
+    isFontUpdating: false,
+    isFontLoaded: false,
   });
 
   const mutationCallback = useCallback((mutations: MutationRecord[]) => {
@@ -86,7 +86,11 @@ export default function useFontFromContent({
     if (mutatedNodes.length > 0) {
       const newChars = getUniqueCharsInPage(mutatedNodes);
       if (newChars.size > 0) {
-        dispatch({ type: 'ADD_LINK_TAG', newChars });
+        dispatch({
+          type: 'ADD_LINK_TAG',
+          newChars,
+          onLoad: () => dispatch({ type: 'FONT_UPDATED' }),
+        });
       }
     }
   }, []);
@@ -99,8 +103,13 @@ export default function useFontFromContent({
     dispatch({
       type: 'INITIALIZE',
       uniqueChars: getUniqueCharsInPage(walker),
+      onLoad: () => dispatch({ type: 'FONT_LOADED' }),
     });
   }, []);
 
-  return { linkTags: state.linkTags, isFontUpdating: Boolean(state.isFontUpdating) };
+  return {
+    linkTags: state.linkTags,
+    isFontUpdating: state.isFontUpdating,
+    isFontLoaded: state.isFontLoaded,
+  };
 }

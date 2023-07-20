@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import useFontFromContent from './use-font-from-content';
 
 type FontContextState =
@@ -23,12 +23,10 @@ type FontContextProps = {
 
 export default function FontContext(props: React.PropsWithChildren<FontContextProps>) {
   const { fontName, display = 'swap', fontWeights, children } = props;
-  const [isFontLoaded, setIsFontLoaded] = useState(false);
-  const { linkTags, isFontUpdating } = useFontFromContent({
+  const { linkTags, isFontLoaded, isFontUpdating } = useFontFromContent({
     fontName,
     display,
     fontWeights,
-    onLoad: () => setIsFontLoaded(true),
   });
   const { Provider: FontContextProvider } = context;
 
