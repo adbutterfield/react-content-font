@@ -1,4 +1,6 @@
-# React Content Font: Create Custom Google Fonts from Page Content 
+# React Content Font
+
+**Create custom Google Fonts from page content!**
 
 ## Languages
 
